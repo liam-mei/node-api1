@@ -1,21 +1,5 @@
 # Node API 1 Project Starter Code
 
-## Topics
-
-- Building a RESTful API.
-- Performing CRUD operations.
-- Writing API endpoints.
-
-## Assignment
-
-Use Node.js and Express to build an API that performs CRUD operations on users.
-
-### Download Project Files and Install Dependencies
-
-- **Fork** and **Clone** this repository.
-- **CD into the folder** where you cloned the repository.
-- Type `npm install` to download all dependencies listed inside `package.json`.
-
 ### Database access
 
 Database access will be done using the `db.js` file included inside the `data` folder. This file publishes the following methods:
