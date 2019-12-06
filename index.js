@@ -54,6 +54,25 @@ app.get("/api/users", (req, res) => {
     });
 });
 
+app.get("/api/users/:id", (req, res) => {
+  db.findById(req.params.id)
+    .then(user => {
+      if (Array.isArray(user)) {
+        res.status(404).json({
+          errorMessage: `The user with the ID: ${req.params.id} does not exist`
+        });
+      } else {
+        res.status(200).json(user);
+      }
+    })
+    .catch(err => {
+      res.status(500).json({
+        errorMessage: "The user information could not be retrieved.",
+        error: err
+      });
+    });
+});
+
 
 
 const port = 8080;
