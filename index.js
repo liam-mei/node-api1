@@ -41,6 +41,20 @@ app.post("/api/users", (req, res) => {
     });
 });
 
+// this is where we define our route, along with a handler function
+app.get("/api/users", (req, res) => {
+  // log the user's ip address
+  console.log("ip:", req.ip);
+  db.find()
+    .then(users => {
+      res.status(200).json(users);
+    })
+    .catch(err => {
+      res.status(500).json({ error: err });
+    });
+});
+
+
 
 const port = 8080;
 const host = "127.0.0.1"; // another way to say "localhost"
