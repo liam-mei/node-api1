@@ -73,6 +73,33 @@ app.get("/api/users/:id", (req, res) => {
     });
 });
 
+app.delete("/api/users/:id", (req, res) => {
+  const { id } = req.params;
+  db.findById(id)
+    .then(user => {
+      db.remove(id)
+        .then(deleted => {
+          if (deleted) {
+            res.status(200).json({ deleted: user });
+          } else {
+            res
+              .status(404)
+              .json({ error: `The user with the ID: ${id} does not exist.` });
+          }
+        })
+        .catch(err => {
+          console.log(err);
+          res
+            .status(500)
+            .json({ error: `The user with ID: ${id} could not be removed` });
+        });
+    })
+    .catch(err =>
+      res
+        .status(404)
+        .json({ error: `The user with the ID: ${id} does not exist.` })
+    );
+});
 
 
 const port = 8080;
