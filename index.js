@@ -101,6 +101,41 @@ app.delete("/api/users/:id", (req, res) => {
     );
 });
 
+app.put("/api/users/:id", (req, res) => {
+  const { id } = req.params;
+  const { name, bio } = req.body;
+  if (!name || !bio) {
+    return res
+      .status(400)
+      .json({ error: "Please provide name and bio for the user." });
+  }
+  db.update(id, { name, bio })
+    .then(updated => {
+      if (updated) {
+        db.findById(id)
+          .then(user => res.status(200).json(user))
+          .catch(err => {
+            console.log(err);
+            res.status(500).json({
+              error:
+                "The user was updated but the information could not be retrieved."
+            });
+          });
+      } else {
+        res
+          .status(404)
+          .json({ error: `The user with the ID: ${id} does not exist.` });
+      }
+    })
+    .catch(err => {
+      console.log(err);
+      res
+        .status(500)
+        .json({
+          error: `The user information with ID: ${id} could not be modified.`
+        });
+    });
+});
 
 const port = 8080;
 const host = "127.0.0.1"; // another way to say "localhost"
